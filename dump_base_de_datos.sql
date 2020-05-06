@@ -11,12 +11,12 @@ CREATE TABLE category;
 DROP TABLE IF EXISTS client;
 
 CREATE TABLE client(
-    id int not null auto_increment primary key,
-    nombre varchar(50) not null,
-    telefono varchar(50) not null
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    telefono VARCHAR(50) NOT NULL
 );
 
-insert into client (nombre,telefono) values
+INSERT INTO client (nombre,telefono) VALUES
 ('coca cola', '3517897553'),
 ('juan perez', '4880544'),
 ('armando casas', '4444444'),
