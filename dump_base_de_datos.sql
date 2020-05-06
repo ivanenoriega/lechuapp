@@ -6,3 +6,4 @@ CREATE TABLE client_detail;
 CREATE TABLE order;
 CREATE TABLE product;
 CREATE TABLE category;
+
