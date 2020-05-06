@@ -28,4 +28,21 @@ INSERT INTO client (nombre,telefono) VALUES
 ('no lo se rick', '4533376'),
 ('parece falso', '4569911');
 
+DROP TABLE IF EXISTS category
 
+CREATE TABLE category(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    estado BIT NOT NULL,
+);
+
+INSERT INTO category(nombre,estado) VALUES("buzos","disponible");
+INSERT INTO category(nombre,estado) VALUES("remeras","disponible");
+INSERT INTO category(nombre,estado) VALUES("camperas","disponible");
+INSERT INTO category(nombre,estado) VALUES("pantalon","disponible");
+INSERT INTO category(nombre,estado) VALUES("medias","disponible");
+INSERT INTO category(nombre,estado) VALUES("camisas","no disponible");
+INSERT INTO category(nombre,estado) VALUES("corbatas","no disponible");
+INSERT INTO category(nombre,estado) VALUES("babuchas","no disponible");
+INSERT INTO category(nombre,estado) VALUES("calzas","no disponible");
+INSERT INTO category(nombre,estado) VALUES("jeans","no disponible");
