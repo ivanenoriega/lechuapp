@@ -69,3 +69,18 @@ INSERT INTO category(nombre,estado) VALUES("corbatas","no disponible");
 INSERT INTO category(nombre,estado) VALUES("babuchas","no disponible");
 INSERT INTO category(nombre,estado) VALUES("calzas","no disponible");
 INSERT INTO category(nombre,estado) VALUES("jeans","no disponible");
+
+DROP TABLE IF EXISTS product
+
+CREATE TABLE product(
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(50) NOT NULL,
+  precio DECIMAL(7,2) NOT NULL,
+  stock INT NOT NULL,
+  color VARCHAR(50) NOT NULL,
+  descripcion VARCHAR (100) NOT NULL,
+  fecha_ingreso DATE NOT NULL,
+  id_category INT NOT NULL,
+  FOREIGN KEY(id_category) REFERENCES category(id)
+
+);
