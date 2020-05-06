@@ -28,26 +28,6 @@ INSERT INTO client (nombre,telefono) VALUES
 ('no lo se rick', '4533376'),
 ('parece falso', '4569911');
 
-<<<<<<< HEAD
-DROP TABLE IF EXISTS category
-
-CREATE TABLE category(
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(50) NOT NULL,
-    estado BIT NOT NULL,
-);
-
-INSERT INTO category(nombre,estado) VALUES("buzos","disponible");
-INSERT INTO category(nombre,estado) VALUES("remeras","disponible");
-INSERT INTO category(nombre,estado) VALUES("camperas","disponible");
-INSERT INTO category(nombre,estado) VALUES("pantalon","disponible");
-INSERT INTO category(nombre,estado) VALUES("medias","disponible");
-INSERT INTO category(nombre,estado) VALUES("camisas","no disponible");
-INSERT INTO category(nombre,estado) VALUES("corbatas","no disponible");
-INSERT INTO category(nombre,estado) VALUES("babuchas","no disponible");
-INSERT INTO category(nombre,estado) VALUES("calzas","no disponible");
-INSERT INTO category(nombre,estado) VALUES("jeans","no disponible");
-=======
 
 DROP TABLE IF EXISTS client_detail;
 
@@ -70,4 +50,22 @@ INSERT INTO client_detail (fecNac,faceBook,direccion,idCliente) VALUES ('1991-04
 ('1991-08-07','www.facebook.com/comadreja','en el arbol',8),
 ('2018-08-21','www.facebook.com/NOLOSE','EN LA TELE',9),
 ('2018-08-21','www.facebook.com/FALSO','TELE 2',10)
->>>>>>> 53f5b7fa36a4637e938794207bc480ae8c7ee132
+
+DROP TABLE IF EXISTS category
+
+CREATE TABLE category(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    estado BIT NOT NULL,
+);
+
+INSERT INTO category(nombre,estado) VALUES("buzos","disponible");
+INSERT INTO category(nombre,estado) VALUES("remeras","disponible");
+INSERT INTO category(nombre,estado) VALUES("camperas","disponible");
+INSERT INTO category(nombre,estado) VALUES("pantalon","disponible");
+INSERT INTO category(nombre,estado) VALUES("medias","disponible");
+INSERT INTO category(nombre,estado) VALUES("camisas","no disponible");
+INSERT INTO category(nombre,estado) VALUES("corbatas","no disponible");
+INSERT INTO category(nombre,estado) VALUES("babuchas","no disponible");
+INSERT INTO category(nombre,estado) VALUES("calzas","no disponible");
+INSERT INTO category(nombre,estado) VALUES("jeans","no disponible");
