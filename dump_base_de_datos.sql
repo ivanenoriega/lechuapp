@@ -28,11 +28,6 @@ INSERT INTO client (nombre,telefono) VALUES
 ('no lo se rick', '4533376'),
 ('parece falso', '4569911');
 
-Modifica el archivo dump_base_de_datos.sql con los nuevos campos de la tabla client_detail.
-Agregar DROP TABLE IF EXISTS client_detail; antes de crear la tabla
-Crear INSERT INTO client_detail VALUES (...). 10 minimo, validar los INSERT de la tabla client
-Crear PR (pull request solicitando los cambios)
-Adjuntar PR en esta card
 
 DROP TABLE IF EXISTS client_detail;
 
