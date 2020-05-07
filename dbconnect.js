@@ -8,8 +8,4 @@ let conexion = mysql.createConnection({
   database: "lechuapp",
 });
 
-<<<<<<< HEAD
 module.exports = conexion;
-=======
-module.exports = conexion;
->>>>>>> 329bcda96918b9b221fd1eada4ded85b06254303
