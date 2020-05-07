@@ -51,12 +51,12 @@ INSERT INTO client_detail (fecNac,faceBook,direccion,idCliente) VALUES ('1991-04
 ('2018-08-21','www.facebook.com/NOLOSE','EN LA TELE',9),
 ('2018-08-21','www.facebook.com/FALSO','TELE 2',10)
 
-DROP TABLE IF EXISTS category
+DROP TABLE IF EXISTS category;
 
 CREATE TABLE category(
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL,
-    estado BIT NOT NULL,
+    estado BIT NOT NULL
 );
 
 INSERT INTO category(nombre,estado) VALUES("buzos","disponible");

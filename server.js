@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get("/client", controladorClient.obtenerClientes);
 app.get("/client/:id", controladorClient.obtenerClientesPorId);
 
-// app.post("/client");
+app.post("/client", controladorClient.crearNuevoCliente);
 
 app.listen(port, function () {
   console.log(`Escuchando en el puerto ${port}`);
