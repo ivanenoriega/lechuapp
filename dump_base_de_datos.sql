@@ -1,12 +1,6 @@
-DROP DATABASE lechuapp;
+DROP DATABASE IF EXISTS lechuapp;
 CREATE DATABASE lechuapp;
 USE lechuapp;
-CREATE TABLE client;
-CREATE TABLE client_detail;
-CREATE TABLE order;
-CREATE TABLE product;
-CREATE TABLE category;
-
 
 DROP TABLE IF EXISTS client;
 
@@ -49,23 +43,23 @@ INSERT INTO client_detail (fecNac,faceBook,direccion,idCliente) VALUES ('1991-04
 ('2020-03-10','www.facebook.com/COVID','CHINAAAAA',7),
 ('1991-08-07','www.facebook.com/comadreja','en el arbol',8),
 ('2018-08-21','www.facebook.com/NOLOSE','EN LA TELE',9),
-('2018-08-21','www.facebook.com/FALSO','TELE 2',10)
+('2018-08-21','www.facebook.com/FALSO','TELE 2',10);
 
-DROP TABLE IF EXISTS category
+DROP TABLE IF EXISTS category;
 
 CREATE TABLE category(
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL,
-    estado BIT NOT NULL,
+    estado BIT NOT NULL
 );
 
-INSERT INTO category(nombre,estado) VALUES("buzos","disponible");
-INSERT INTO category(nombre,estado) VALUES("remeras","disponible");
-INSERT INTO category(nombre,estado) VALUES("camperas","disponible");
-INSERT INTO category(nombre,estado) VALUES("pantalon","disponible");
-INSERT INTO category(nombre,estado) VALUES("medias","disponible");
-INSERT INTO category(nombre,estado) VALUES("camisas","no disponible");
-INSERT INTO category(nombre,estado) VALUES("corbatas","no disponible");
-INSERT INTO category(nombre,estado) VALUES("babuchas","no disponible");
-INSERT INTO category(nombre,estado) VALUES("calzas","no disponible");
-INSERT INTO category(nombre,estado) VALUES("jeans","no disponible");
+INSERT INTO category(nombre,estado) VALUES("buzos", 1);
+INSERT INTO category(nombre,estado) VALUES("remeras", 1);
+INSERT INTO category(nombre,estado) VALUES("camperas", 1);
+INSERT INTO category(nombre,estado) VALUES("pantalon", 1);
+INSERT INTO category(nombre,estado) VALUES("medias", 1);
+INSERT INTO category(nombre,estado) VALUES("camisas", 0);
+INSERT INTO category(nombre,estado) VALUES("corbatas", 0);
+INSERT INTO category(nombre,estado) VALUES("babuchas", 0);
+INSERT INTO category(nombre,estado) VALUES("calzas", 0);
+INSERT INTO category(nombre,estado) VALUES("jeans", 0);
