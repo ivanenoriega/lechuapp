@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const database = require("./dbconnect");
 const commons = require("./server/commons");
 const controladorClient = require('./controladorClientes');
-
+// comentario para arreglar merge
 const app = express();
 const port = process.env.PORT || 3000;
 
