@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const database = require("./dbconnect");
+const commons = require("./server/commons");
 
 const app = express();
 const port = 3000;
@@ -15,7 +16,5 @@ app.listen(port, function () {
   console.log(`Escuchando en el puerto ${port}`);
 });
 
-app.use(function (err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).send('Se rompio todo!');
-});
+app.use(commons.errorHandler);
+
