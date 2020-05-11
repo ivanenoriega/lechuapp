@@ -64,7 +64,7 @@ INSERT INTO category(nombre,estado) VALUES("babuchas", 0);
 INSERT INTO category(nombre,estado) VALUES("calzas", 0);
 INSERT INTO category(nombre,estado) VALUES("jeans", 0);
 
-DROP TABLE IF EXISTS product
+DROP TABLE IF EXISTS product;
 
 CREATE TABLE product(
   id INT AUTO_INCREMENT PRIMARY KEY,
