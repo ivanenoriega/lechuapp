@@ -63,3 +63,38 @@ INSERT INTO category(nombre,estado) VALUES("corbatas", 0);
 INSERT INTO category(nombre,estado) VALUES("babuchas", 0);
 INSERT INTO category(nombre,estado) VALUES("calzas", 0);
 INSERT INTO category(nombre,estado) VALUES("jeans", 0);
+
+DROP TABLE IF EXISTS product;
+
+CREATE TABLE product(
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(50) NOT NULL,
+  precio DECIMAL(7,2) NOT NULL,
+  stock INT NOT NULL,
+  color VARCHAR(50) NOT NULL,
+  descripcion VARCHAR (100) NOT NULL,
+  fecha_ingreso DATE NOT NULL,
+  id_category INT NOT NULL,
+  FOREIGN KEY(id_category) REFERENCES category(id)
+);
+
+INSERT INTO product(nombre,precio,stock,color,descripcion,fecha_ingreso,id_category) 
+  VALUES ("remera",100,10,"negro","escote en V","2020-05-06", 1);
+INSERT INTO product(nombre,precio,stock,color,descripcion,fecha_ingreso,id_category) 
+  VALUES ("pantalon",50,10,"negro","chupin","2020-05-06", 10);
+INSERT INTO product(nombre,precio,stock,color,descripcion,fecha_ingreso,id_category) 
+  VALUES ("medias",200,10,"negro","largas","2020-05-06", 2);
+INSERT INTO product(nombre,precio,stock,color,descripcion,fecha_ingreso,id_category) 
+  VALUES ("babucha",80,10,"negro","ancha","2020-05-06", 3);
+INSERT INTO product(nombre,precio,stock,color,descripcion,fecha_ingreso,id_category) 
+  VALUES ("camisas",400,10,"negro","manga larga","2020-05-06", 4);
+INSERT INTO product(nombre,precio,stock,color,descripcion,fecha_ingreso,id_category) 
+  VALUES ("calzas",90,10,"negro","deportivas","2020-05-06", 5);
+INSERT INTO product(nombre,precio,stock,color,descripcion,fecha_ingreso,id_category) 
+  VALUES ("corbatas",100,10,"negro","fiesta","2020-05-06", 6);
+INSERT INTO product(nombre,precio,stock,color,descripcion,fecha_ingreso,id_category) 
+  VALUES ("camperas",500,10,"negro","rompeviento","2020-05-06", 7);
+INSERT INTO product(nombre,precio,stock,color,descripcion,fecha_ingreso,id_category) 
+  VALUES ("buzos",40,10,"negro","cangurito","2020-05-06", 8);
+INSERT INTO product(nombre,precio,stock,color,descripcion,fecha_ingreso,id_category) 
+  VALUES ("jeans",100,10,"negro","pata elefante","2020-05-06", 9);
