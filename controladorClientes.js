@@ -39,8 +39,3 @@ module.exports = {
     crearNuevoCliente : crearNuevoCliente
 };
 
-/*
-Crear un nuevo cliente (POST "/client"). Validar que todos los datos obligatorios (tabla client) estén presentes. Devolver el ID del nuevo client en la respuesta.
-Editar un cliente existente (PUT "/client").
-Añada un elemento
- */
