@@ -99,13 +99,6 @@ INSERT INTO product(nombre,precio,stock,color,descripcion,fecha_ingreso,id_categ
 INSERT INTO product(nombre,precio,stock,color,descripcion,fecha_ingreso,id_category) 
   VALUES ("jeans",100,10,"negro","pata elefante","2020-05-06", 9);
 
-Modifica el archivo dump_base_de_datos.sql con los nuevos campos de la tabla order.
-Agregar DROP TABLE IF EXISTS order; antes de crear la tabla
-Crear INSERT INTO order VALUES (...). 10 minimo. Ten en cuenta los INSERT a la tabla category
-Crear PR (pull request solicitando los cambios)
-Adjuntar PR en esta card
-Añada un elemento
-
 DROP TABLE IF EXISTS order;
 CREATE TABLE order (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -115,6 +108,7 @@ CREATE TABLE order (
   FOREIGN KEY (client_id) REFERENCES client(id),
   FOREIGN KEY (product_id) REFERENCES product(id)
 );
+
 
 INSERT INTO order (client_id,product_id,cantidad) VALUES (1,1,1),
 (2,2,2),(3,3,3),(4,4,4),(5,5,5),(6,6,6),(7,7,7),(8,8,8),(9,9,9),(10,10,10);
