@@ -25,6 +25,12 @@ function crearNuevoCliente(req, res){
     let nombre = body.nombre;
     let telefono = body.telefono;    
 
+    if(!body) return res.status(422).json({'message': 'contenido invalido','cause':'no hay body'});
+    
+    if(!nombre || typeof(nombre)==='string') return res.status(422).json({ 'message': 'contenido invalido', 'cause': 'no hay nombre o el formato es incorrecto' });
+    
+    if(!telefono || typeof(telefono)==='number') return res.status(422).json({ 'message': 'contenido invalido', 'cause': 'no hay telefono o el formato es incorrecto' });
+
     conexion.query("INSERT INTO client (nombre, telefono) VALUES (?,?)", [nombre, telefono], 
     function(err, result){
         if(err) return console.log("Hubo un error en el insert de cliente", err.message);         
