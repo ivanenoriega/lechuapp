@@ -99,8 +99,8 @@ INSERT INTO product(nombre,precio,stock,color,descripcion,fecha_ingreso,id_categ
 INSERT INTO product(nombre,precio,stock,color,descripcion,fecha_ingreso,id_category) 
   VALUES ("jeans",100,10,"negro","pata elefante","2020-05-06", 9);
 
-DROP TABLE IF EXISTS order;
-CREATE TABLE order (
+DROP TABLE IF EXISTS purchase;
+CREATE TABLE purchase (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   client_id INT NOT NULL,
   product_id INT NOT NULL,
@@ -110,5 +110,5 @@ CREATE TABLE order (
 );
 
 
-INSERT INTO order (client_id,product_id,cantidad) VALUES (1,1,1),
+INSERT INTO purchase (client_id,product_id,cantidad) VALUES (1,1,1),
 (2,2,2),(3,3,3),(4,4,4),(5,5,5),(6,6,6),(7,7,7),(8,8,8),(9,9,9),(10,10,10);
