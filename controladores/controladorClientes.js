@@ -1,4 +1,4 @@
-const conexion = require('./dbconnect');
+const conexion = require('../dbconnect');
 
 function obtenerClientes(req, res){
 
