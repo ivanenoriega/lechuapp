@@ -5,11 +5,11 @@ function listarOrdenes(req,res){
 // nom client nom producto pre unit cantidad y  total  de la orden. /select / join / group by.
  var id = req.params.id;
 
- var sql = 'select pu.id,c.nombre , p.nombre, p.precio, pu.cantidad, sum(p.precio * pu.cantidad) as total'+
+ var sql = 'select pu.id,c.nombre , p.nombre, p.precio, pu.cantidad, sum(p.precio * pu.cantidad) as total '+
     'from purchase pu join client c on pu.client_id=c.id join product p on pu.product_id=p.id ';
 
  if(id){
-    sql = sql + 'where pu.id= '+id +' group by pu.id ';
+    sql = sql + ' where pu.id= '+id +' group by pu.id ';
 
     conexion.query(sql,function(error,respuesta){
         if(error){
@@ -25,7 +25,7 @@ function listarOrdenes(req,res){
 
   
  if(!id){
-        sql = sql + ' group by pu.id';
+        sql = sql + ' group by pu.id ';
 
     conexion.query(sql,function(error,respuesta){
         if(error){
