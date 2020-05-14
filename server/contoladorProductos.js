@@ -1,7 +1,7 @@
 const conexion = require('./dbconnect');
 const controladorCategoria = require("./controladorCategoria");
 
-function obtenerProductos(req,res){
+function obtenerProductos(req, res) {
 
     const sql = "select * from product P join category C ON P.id_category = C.id  order by fecha_ingreso desc";
     conexion.query(sql, function (err, result) {
@@ -25,48 +25,48 @@ function obtenerProductosPorId(req, res) {
 async function crearNuevoProducto(req, res) {
     let body = req.body;
     //product(nombre,precio,stock,color,descripcion,fecha_ingreso,id_category) 
-    let {nombre,precio,stock,color,descripcion,fecha_ingreso,id_category} = body;
+    let { nombre, precio, stock, color, descripcion, fecha_ingreso, id_category } = body;
     //reconoce undifined,null !nombre
-    if(!nombre || typeof(nombre) != "string" ){
+    if (!nombre || typeof (nombre) != "string") {
 
-         console.log(nombre + " invalido");
-         return res.status(400).send({err: "nombre invalido" });
+        console.log(nombre + " invalido");
+        return res.status(400).send({ err: "nombre invalido" });
     }
-    if(!precio || typeof(precio) != "number" ){
+    if (!precio || typeof (precio) != "number") {
 
         console.log(precio + " invalido");
-        return res.status(400).send({err: "precio invalido" });
-   }
-   if(!stock || typeof(stock) != "number" ){
-
-    console.log(stock + " invalido");
-    return res.status(400).send({err: "stock invalido" });
-   }
-   if(!color || typeof(color) != "string" ){
-
-    console.log(color + " invalido");
-    return res.status(400).send({err: "color invalido" });
+        return res.status(400).send({ err: "precio invalido" });
     }
-    if(!descripcion || typeof(descripcion) != "string" ){
+    if (!stock || typeof (stock) != "number") {
 
-    console.log(descripcion+ " invalido");
-    return res.status(400).send({err: "descripcion invalido" });
+        console.log(stock + " invalido");
+        return res.status(400).send({ err: "stock invalido" });
     }
-    if(!fecha_ingreso || !/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/.test(fecha_ingreso)){
+    if (!color || typeof (color) != "string") {
 
-       return res.status(400).send({err: "fecha invalida" });
+        console.log(color + " invalido");
+        return res.status(400).send({ err: "color invalido" });
     }
-    if(!id_category || typeof(id_category) != "number" ){
+    if (!descripcion || typeof (descripcion) != "string") {
 
-    const validacionCategoria = await conexion.query(`SELECT * FROM category WHERE id = ${id_category}`);
-        if(validacionCategoria == [] ){
-            console.log(id_category+ " invalido");
-            return res.status(400).send({err: "categoria invalido" });
+        console.log(descripcion + " invalido");
+        return res.status(400).send({ err: "descripcion invalido" });
+    }
+    if (!fecha_ingreso || !/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/.test(fecha_ingreso)) {
+
+        return res.status(400).send({ err: "fecha invalida" });
+    }
+    if (!id_category || typeof (id_category) != "number") {
+
+        const validacionCategoria = await conexion.query(`SELECT * FROM category WHERE id = ${id_category}`);
+        if (validacionCategoria == []) {
+            console.log(id_category + " invalido");
+            return res.status(400).send({ err: "categoria invalido" });
         }
     }
-    
+
     conexion.query("INSERT INTO client (nombre,precio,stock,color,descripcion,fecha_ingreso,id_category) VALUES (?,?,?,?,?,?,?)",
-     [nombre,precio,stock,color,descripcion,fecha_ingreso,id_category] ,
+        [nombre, precio, stock, color, descripcion, fecha_ingreso, id_category],
         function (err, result) {
             if (err) return console.log("Hubo un error en el insert de producto", err.message);
             res.send(result);
@@ -75,10 +75,10 @@ async function crearNuevoProducto(req, res) {
 
 }
 
-    module.exports = {
-        
-        obtenerProductos,
-        obtenerProductosPorId,
-        crearNuevoProducto
-    
-    };
+module.exports = {
+
+    obtenerProductos,
+    obtenerProductosPorId,
+    crearNuevoProducto
+
+};
