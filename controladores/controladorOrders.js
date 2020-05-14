@@ -5,7 +5,7 @@ function listarOrdenes(req,res){
 // nom client nom producto pre unit cantidad y  total  de la orden. /select / join / group by.
  var id = req.params.id;
 
- var sql = 'select pu.id,c.nombre , p.nombre, p.precio, pu.cantidad, sum(p.precio * pu.cantidad)'+
+ var sql = 'select pu.id,c.nombre , p.nombre, p.precio, pu.cantidad, sum(p.precio * pu.cantidad) as total'+
     'from purchase pu join client c on pu.client_id=c.id join product p on pu.product_id=p.id ';
 
  if(id){
