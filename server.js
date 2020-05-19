@@ -17,8 +17,10 @@ app.get("/error", function () { console.log("error"); throw new Error() });
 app.get("/client", controladorClient.obtenerClientes);
 app.get("/client/:id", controladorClient.obtenerClientesPorId);
 app.post("/client", controladorClient.crearNuevoCliente);
-app.get("/orders",controladorOrders.listarOrdenes);
-app.get("/orders/:id",controladorOrders.listarOrdenes);
+app.put("/client/:id", controladorClient.actualizarCliente);
+app.get("/orders", controladorOrders.listarOrdenes);
+app.get("/orders/:id", controladorOrders.listarOrdenes);
+
 
 app.get('/products/:id',controladorProductos.obtenerProductosPorId);
 app.get('/products',controladorProductos.obtenerProductos);

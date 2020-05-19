@@ -47,9 +47,33 @@ function crearNuevoCliente(req, res){
     
 }
 
+function actualizarCliente(req,res){
+
+    var id = req.params.id;
+    var nombre = req.body.nombre;
+    
+    if(!id) return res.status(400).send("Hubo un error no hay id!!"); 
+    console.log(id);
+      
+    if(id){
+        conexion.query("UPDATE client SET nombre = '" + nombre + "' WHERE id = " + id, 
+        function (error,respuesta) {
+
+            if(error) return res.status(404).send("Hubo un error en la consulta para traer clientes por id");
+            
+            console.log(respuesta);
+            
+            if( respuesta.length==0 ) return res.status(404).send("cliente no encontrado");
+
+        res.json(respuesta);
+    });
+  }
+}
+
 module.exports = {
-    obtenerClientes,
-    obtenerClientesPorId,
-    crearNuevoCliente
+    obtenerClientes: obtenerClientes,
+    obtenerClientesPorId: obtenerClientesPorId,
+    crearNuevoCliente: crearNuevoCliente,
+    actualizarCliente : actualizarCliente
 };
 
