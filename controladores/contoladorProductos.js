@@ -1,4 +1,4 @@
-const conexion = require('./dbconnect');
+const conexion = require('../dbconnect');
 const controladorCategoria = require("./controladorCategoria");
 
 function obtenerProductos(req, res) {
@@ -54,7 +54,7 @@ async function crearNuevoProducto(req, res) {
     }
     if (!fecha_ingreso || !/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/.test(fecha_ingreso)) {
 
-        return res.status(400).send({ err: "fecha invalida" });
+        //return res.status(400).send({ err: "fecha invalida" });
     }
     if (!id_category || typeof (id_category) != "number") {
 
@@ -65,10 +65,13 @@ async function crearNuevoProducto(req, res) {
         }
     }
 
-    conexion.query("INSERT INTO client (nombre,precio,stock,color,descripcion,fecha_ingreso,id_category) VALUES (?,?,?,?,?,?,?)",
+    conexion.query("INSERT INTO product (nombre,precio,stock,color,descripcion,fecha_ingreso,id_category) VALUES (?,?,?,?,?,?,?)",
         [nombre, precio, stock, color, descripcion, fecha_ingreso, id_category],
         function (err, result) {
-            if (err) return console.log("Hubo un error en el insert de producto", err.message);
+            if (err) {
+                console.log("Hubo un error en el insert de producto", err.message);
+                return res.status(500).send('Error');
+            }
             res.send(result);
 
         });
