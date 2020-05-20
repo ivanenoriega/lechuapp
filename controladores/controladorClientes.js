@@ -1,24 +1,22 @@
 const conexion = require("../dbconnect");
+const clientInfo =
+  "c.id, c.nombre, c.telefono, cd.fecNac as fecha_nacimiento, cd.faceBook as facebook, cd.direccion FROM client c JOIN client_detail cd ON cd.idCliente = c.id";
 
 function obtenerClientes(req, res) {
-  const sql =
-    "SELECT * FROM client JOIN client_detail ON idCliente = client.id ORDER BY client.id DESC";
+  const sql = "SELECT " + clientInfo + " ORDER BY c.id DESC";
   conexion.query(sql, function (err, result) {
-    if (err)
-      return res.status(404).send("Hubo un error en la consulta cliente");
+    if (err) res.status(404).send("Hubo un error en la consulta cliente");
     if (result.length === 0) {
-      return res.status(204).send(result);
+      res.status(204).send(result);
     }
-    return res.json(result);
+    res.json(result);
   });
 }
 
 function obtenerClientesPorId(req, res) {
   let id = req.params.id;
 
-  const sql =
-    "SELECT * FROM client JOIN client_detail ON idCliente = client.id WHERE client.id = " +
-    id;
+  const sql = "SELECT " + clientInfo + " WHERE c.id = " + id;
   if (isNaN(id)) {
     res.status(400).send({ message: "id param invalido" });
   } else {
@@ -30,26 +28,24 @@ function obtenerClientesPorId(req, res) {
           err
         );
       if (result.length === 0) {
-        return res.status(404).send({ message: "usuario no encontrado" });
+        res.status(404).send({ message: "usuario no encontrado" });
       }
-      return res.json(result);
+      res.json(result);
     });
   }
 }
 
 function crearNuevoCliente(req, res) {
-  let body = req.body;
-  let nombre = body.nombre;
-  let telefono = body.telefono;
+  const { nombre, telefono, fecha_nacimiento, facebook, direccion } = req.body;
 
   if (!nombre || typeof nombre !== "string")
-    return res.status(422).json({
+    res.status(422).json({
       message: "contenido invalido",
       cause: "no hay nombre o el formato es incorrecto",
     });
 
   if (!telefono || typeof telefono !== "number")
-    return res.status(422).json({
+    res.status(422).json({
       message: "contenido invalido",
       cause: "no hay telefono o el formato es incorrecto",
     });
@@ -58,46 +54,98 @@ function crearNuevoCliente(req, res) {
     "INSERT INTO client (nombre, telefono) VALUES (?,?)",
     [nombre, telefono],
     function (err, result) {
-      if (err)
-        return console.log(
-          "Hubo un error en el insert de cliente",
-          err.message
-        );
-      res.send(result);
+      if (err) {
+        console.log("Hubo un error en el insert de cliente", err.message);
+        res
+          .status(500)
+          .send({ message: "Ocurrio un error al crear el cliente." });
+      }
+
+      conexion.query(
+        "INSERT INTO client_detail (direccion, fecNac, faceBook, idCliente) VALUES (?,?,?,?)",
+        [direccion, fecha_nacimiento, facebook, result.insertId],
+        function (err, result) {
+          if (err) {
+            console.log("Hubo un error en el insert de cliente", err.message);
+            res.status(500).send("Ocurrio un error al crear el cliente.");
+          }
+
+          res.status(200).send({ message: "Cliente creado con exito." });
+        }
+      );
     }
   );
 }
 
 function actualizarCliente(req, res) {
   var id = req.params.id;
-  var nombre = req.body.nombre;
+  const { nombre, telefono, fecha_nacimiento, facebook, direccion } = req.body;
+  let queryClient = "";
+  let queryClientDetail = "";
 
-  if (!id) return res.status(400).send("Hubo un error no hay id!!");
-  console.log(id);
+  if (!id) {
+    res.status(400).send("Hubo un error no hay id!!");
+  }
 
-  if (id) {
+  if (nombre) {
+    queryClient += `nombre = '${nombre}'`;
+  }
+
+  if (telefono) {
+    queryClient += `${nombre ? ", " : ""}telefono = '${telefono}'`;
+  }
+
+  if (fecha_nacimiento) {
+    queryClientDetail += `fecNac = '${fecha_nacimiento}'`;
+  }
+
+  if (facebook) {
+    queryClientDetail += `${
+      fecha_nacimiento ? ", " : ""
+    }faceBook = '${facebook}'`;
+  }
+
+  if (direccion) {
+    queryClientDetail += `${
+      fecha_nacimiento || facebook ? ", " : ""
+    }direccion = '${direccion}'`;
+  }
+
+  const query = `UPDATE client SET ${queryClient} WHERE id = ${id}`;
+  console.log(query);
+  conexion.query(query, function (error, respuesta) {
+    if (error) {
+      res
+        .status(500)
+        .send("Hubo un error en la consulta para traer clientes por id");
+    }
+
+    if (respuesta.length == 0) {
+      res.status(500).send("cliente no encontrado");
+    }
+
     conexion.query(
-      "UPDATE client SET nombre = '" + nombre + "' WHERE id = " + id,
+      `UPDATE client_detail SET ${queryClientDetail} WHERE idCliente = ${id}`,
       function (error, respuesta) {
-        if (error)
-          return res
-            .status(404)
+        if (error) {
+          res
+            .status(500)
             .send("Hubo un error en la consulta para traer clientes por id");
+        }
 
-        console.log(respuesta);
+        if (respuesta.length == 0) {
+          res.status(500).send("cliente no encontrado");
+        }
 
-        if (respuesta.length == 0)
-          return res.status(404).send("cliente no encontrado");
-
-        res.json(respuesta);
+        res.json({ message: "Cliente actualizado con exito." });
       }
     );
-  }
+  });
 }
 
 module.exports = {
-  obtenerClientes: obtenerClientes,
-  obtenerClientesPorId: obtenerClientesPorId,
-  crearNuevoCliente: crearNuevoCliente,
-  actualizarCliente: actualizarCliente,
+  obtenerClientes,
+  obtenerClientesPorId,
+  crearNuevoCliente,
+  actualizarCliente,
 };

@@ -23,7 +23,6 @@ app.post("/client", controladorClient.crearNuevoCliente);
 app.put("/client/:id", controladorClient.actualizarCliente);
 app.get("/orders", controladorOrders.listarOrdenes);
 app.get("/orders/:id", controladorOrders.listarOrdenes);
-
 app.get("/products/:id", controladorProductos.obtenerProductosPorId);
 app.get("/products", controladorProductos.obtenerProductos);
 app.post("/products", controladorProductos.crearNuevoProducto);
