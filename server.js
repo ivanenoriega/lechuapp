@@ -1,10 +1,18 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-//const database = require("./dbconnect");
-const commons = require("./server/commons");
-const controladorClient = require("./controladores/controladorClientes");
-const controladorOrders = require("./controladores/controladorOrders");
-const controladorProductos = require("./controladores/contoladorProductos");
+const { errorHandler } = require("./server/commons");
+const { listarOrdenes, listarOrdenes } = require("./controladores/orders");
+const {
+  getClients,
+  getClientById,
+  createClient,
+  updateClient,
+} = require("./controladores/clients");
+const {
+  obtenerProductosPorId,
+  obtenerProductos,
+  crearNuevoProducto,
+} = require("./controladores/products");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -16,22 +24,22 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get("/ping", (req, res) => res.send("Lechu pong!"));
 
 // Client ednpoints
-app.get("/client", controladorClient.obtenerClientes);
-app.get("/client/:id", controladorClient.obtenerClientesPorId);
-app.post("/client", controladorClient.crearNuevoCliente);
-app.put("/client/:id", controladorClient.actualizarCliente);
+app.get("/client", getClients);
+app.get("/client/:id", getClientById);
+app.post("/client", createClient);
+app.put("/client/:id", updateClient);
 
 // Orders endpoints
-app.get("/orders", controladorOrders.listarOrdenes);
-app.get("/orders/:id", controladorOrders.listarOrdenes);
+app.get("/orders", listarOrdenes);
+app.get("/orders/:id", listarOrdenes);
 
 // Products endpoints
-app.get("/products/:id", controladorProductos.obtenerProductosPorId);
-app.get("/products", controladorProductos.obtenerProductos);
-app.post("/products", controladorProductos.crearNuevoProducto);
+app.get("/products/:id", obtenerProductosPorId);
+app.get("/products", obtenerProductos);
+app.post("/products", crearNuevoProducto);
+
+app.use(errorHandler);
 
 app.listen(port, function () {
   console.log(`Escuchando en el puerto ${port}`);
 });
-
-app.use(commons.errorHandler);
