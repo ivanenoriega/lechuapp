@@ -12,17 +12,20 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Lechu Pong!
 app.get("/ping", (req, res) => res.send("Lechu pong!"));
-app.get("/error", function () {
-  console.log("error");
-  throw new Error();
-});
+
+// Client ednpoints
 app.get("/client", controladorClient.obtenerClientes);
 app.get("/client/:id", controladorClient.obtenerClientesPorId);
 app.post("/client", controladorClient.crearNuevoCliente);
 app.put("/client/:id", controladorClient.actualizarCliente);
+
+// Orders endpoints
 app.get("/orders", controladorOrders.listarOrdenes);
 app.get("/orders/:id", controladorOrders.listarOrdenes);
+
+// Products endpoints
 app.get("/products/:id", controladorProductos.obtenerProductosPorId);
 app.get("/products", controladorProductos.obtenerProductos);
 app.post("/products", controladorProductos.crearNuevoProducto);
