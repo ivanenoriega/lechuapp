@@ -1,20 +1,20 @@
 const conexion = require("../dbconnect");
-const controladorCategoria = require("./controladorCategoria");
 
 function obtenerProductos(req, res) {
   const sql =
-    "select * from product P join category C ON P.id_category = C.id  order by fecha_ingreso desc";
+    "SELECT * FROM product P JOIN category C ON P.id_category = C.id order by fecha_ingreso desc";
   conexion.query(sql, function (err, result) {
     if (err)
       return res.status(404).send("Hubo un error en la consulta producto");
     res.json(result);
   });
 }
+
 function obtenerProductosPorId(req, res) {
   let id = req.params.id;
 
   const sql =
-    "SELECT * FROM product P join category C ON P.id_category = C.id WHERE P.id = " +
+    "SELECT * FROM product P JOIN category C ON P.id_category = C.id WHERE P.id = " +
     id;
 
   conexion.query(sql, function (err, result) {
