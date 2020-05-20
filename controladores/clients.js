@@ -1,9 +1,12 @@
 const conexion = require("../dbconnect");
-const clientInfo =
+const queryGetClient =
   "c.id, c.nombre, c.telefono, cd.fecNac as fecha_nacimiento, cd.faceBook as facebook, cd.direccion FROM client c JOIN client_detail cd ON cd.idCliente = c.id";
+const queryCreateClient = "INSERT INTO client (nombre, telefono) VALUES (?,?)";
+const queryCreateClientDetail =
+  "INSERT INTO client_detail (direccion, fecNac, faceBook, idCliente) VALUES (?,?,?,?)";
 
-function obtenerClientes(req, res) {
-  const sql = "SELECT " + clientInfo + " ORDER BY c.id DESC";
+function getClients(req, res) {
+  const sql = "SELECT " + queryGetClient + " ORDER BY c.id DESC";
   conexion.query(sql, function (err, result) {
     if (err) res.status(404).send("Hubo un error en la consulta cliente");
     if (result.length === 0) {
@@ -13,10 +16,10 @@ function obtenerClientes(req, res) {
   });
 }
 
-function obtenerClientesPorId(req, res) {
+function getClientById(req, res) {
   let id = req.params.id;
 
-  const sql = "SELECT " + clientInfo + " WHERE c.id = " + id;
+  const sql = "SELECT " + queryGetClient + " WHERE c.id = " + id;
   if (isNaN(id)) {
     res.status(400).send({ message: "id param invalido" });
   } else {
@@ -35,7 +38,7 @@ function obtenerClientesPorId(req, res) {
   }
 }
 
-function crearNuevoCliente(req, res) {
+function createClient(req, res) {
   const { nombre, telefono, fecha_nacimiento, facebook, direccion } = req.body;
 
   if (!nombre || typeof nombre !== "string")
@@ -50,34 +53,30 @@ function crearNuevoCliente(req, res) {
       cause: "no hay telefono o el formato es incorrecto",
     });
 
-  conexion.query(
-    "INSERT INTO client (nombre, telefono) VALUES (?,?)",
-    [nombre, telefono],
-    function (err, result) {
-      if (err) {
-        console.log("Hubo un error en el insert de cliente", err.message);
-        res
-          .status(500)
-          .send({ message: "Ocurrio un error al crear el cliente." });
-      }
-
-      conexion.query(
-        "INSERT INTO client_detail (direccion, fecNac, faceBook, idCliente) VALUES (?,?,?,?)",
-        [direccion, fecha_nacimiento, facebook, result.insertId],
-        function (err, result) {
-          if (err) {
-            console.log("Hubo un error en el insert de cliente", err.message);
-            res.status(500).send("Ocurrio un error al crear el cliente.");
-          }
-
-          res.status(200).send({ message: "Cliente creado con exito." });
-        }
-      );
+  conexion.query(queryCreateClient, [nombre, telefono], function (err, result) {
+    if (err) {
+      console.log("Ocurrio un error al crear el cliente", err.message);
+      res
+        .status(500)
+        .send({ message: "Ocurrio un error al crear el cliente." });
     }
-  );
+
+    conexion.query(
+      queryCreateClientDetail,
+      [direccion, fecha_nacimiento, facebook, result.insertId],
+      function (err, result) {
+        if (err) {
+          console.log("Ocurrio un error al crear el cliente", err.message);
+          res.status(500).send("Ocurrio un error al crear el cliente.");
+        }
+
+        res.status(200).send({ message: "Cliente creado con exito." });
+      }
+    );
+  });
 }
 
-function actualizarCliente(req, res) {
+function updateClient(req, res) {
   var id = req.params.id;
   const { nombre, telefono, fecha_nacimiento, facebook, direccion } = req.body;
   let queryClient = "";
@@ -112,7 +111,6 @@ function actualizarCliente(req, res) {
   }
 
   const query = `UPDATE client SET ${queryClient} WHERE id = ${id}`;
-  console.log(query);
   conexion.query(query, function (error, respuesta) {
     if (error) {
       res
@@ -144,8 +142,8 @@ function actualizarCliente(req, res) {
 }
 
 module.exports = {
-  obtenerClientes,
-  obtenerClientesPorId,
-  crearNuevoCliente,
-  actualizarCliente,
+  getClients,
+  getClientById,
+  createClient,
+  updateClient,
 };
